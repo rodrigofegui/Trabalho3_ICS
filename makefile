@@ -3,6 +3,7 @@ EXECUTADOR = java
 DOCUMENTADOR = javadoc
 DIR_BASE = /home/rodrigo/Dropbox/UnB/UnB\ 2016.1/ICS/Trabalhos/Trabalho3/
 DIR_FONTES = src/
+ARQ_MELODIAS = src/BaseadoMidi
 DIR_BINARIO = bin/
 DIR_DOCUMENTACAO = Javadoc/
 DIR_EXTERN_JAR = /home/rodrigo/Dropbox/UnB/UnB\ 2016.1/ICS/Trabalhos/sintese.jar
@@ -12,6 +13,9 @@ ARQ_PRINCIPAL = Principal
 
 compilar:
 	$(COMPILADOR) -d $(DIR_BINARIO) -cp $(DIR_EXTERN_JAR) -sourcepath $(DIR_FONTES):. $(DIR_FONTES)*.java -Xlint
+
+compilarMelodias:
+	$(COMPILADOR) -d $(DIR_BINARIO) -cp $(DIR_EXTERN_JAR) -sourcepath $(DIR_FONTES):. $(ARQ_MELODIAS).java -Xlint
 	
 executar: clear_bin compilar
 	$(EXECUTADOR) $(TAGS_MEMORIA) -cp $(DIR_BASE)$(DIR_BINARIO):$(DIR_EXTERN_JAR) $(ARQ_PRINCIPAL)
