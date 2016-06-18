@@ -1,29 +1,35 @@
 COMPILADOR = javac
 EXECUTADOR = java
 DOCUMENTADOR = javadoc
+
 DIR_BASE = /home/rodrigo/Dropbox/UnB/UnB\ 2016.1/ICS/Trabalhos/Trabalho3/
 DIR_FONTES = src/
-ARQ_MELODIAS = src/BaseadoMidi
 DIR_BINARIO = bin/
 DIR_DOCUMENTACAO = Javadoc/
 DIR_EXTERN_JAR = /home/rodrigo/Dropbox/UnB/UnB\ 2016.1/ICS/Trabalhos/sintese.jar
+
 TAGS_DOCUMENTACAO = -author -version
 TAGS_MEMORIA = -Xms1024M -Xmx1624M
+
+ARQ_MELODIAS = melodias/BaseadoMidi
+ARQ_MELODIAS_REGIS = melodiasRegistradas.txt
+ARQ_MELODIAS_SRC = src/$(ARQ_MELODIAS).java
+ARQ_MELODIAS_BIN = bin/melodias/BaseadoMidi.class
 ARQ_PRINCIPAL = Principal
 
 compilar:
 	$(COMPILADOR) -d $(DIR_BINARIO) -cp $(DIR_EXTERN_JAR) -sourcepath $(DIR_FONTES):. $(DIR_FONTES)*.java -Xlint
 
 compilarMelodias:
-	$(COMPILADOR) -d $(DIR_BINARIO) -cp $(DIR_EXTERN_JAR) -sourcepath $(DIR_FONTES):. $(ARQ_MELODIAS).java -Xlint
+	$(COMPILADOR) -d $(DIR_BINARIO) -cp $(DIR_EXTERN_JAR) -sourcepath $(DIR_FONTES):. $(ARQ_MELODIAS_SRC) -Xlint
 	
 executar: clear_bin compilar
 	$(EXECUTADOR) $(TAGS_MEMORIA) -cp $(DIR_BASE)$(DIR_BINARIO):$(DIR_EXTERN_JAR) $(ARQ_PRINCIPAL)
 
 documentar: clear_doc compilar 
-	$(DOCUMENTADOR) -d $(DIR_DOCUMENTACAO) -sourcepath $(DIR_FONTES):. $(DIR_FONTES)*.java -docencoding UTF-8 $(TAGS_DOCUMENTACAO)
+	$(DOCUMENTADOR) -d $(DIR_DOCUMENTACAO) -sourcepath $(DIR_FONTES):. $(DIR_FONTES)*/*.java  $(DIR_FONTES)*.java -docencoding UTF-8 $(TAGS_DOCUMENTACAO)
 
-clear_all: clear_bin clear_doc
+clear_all: clear_gerados clear_bin clear_doc
 	clear
 
 clear_bin:
@@ -35,4 +41,12 @@ clear_doc:
 	rm -rf $(DIR_DOCUMENTACAO)
 	mkdir $(DIR_DOCUMENTACAO)
 	clear
+
+clear_gerados:
+	rm $(ARQ_MELODIAS_REGIS)
+	touch $(ARQ_MELODIAS_REGIS)	
+	rm $(ARQ_MELODIAS_SRC)
+	rm $(ARQ_MELODIAS_BIN)
+	
+
 

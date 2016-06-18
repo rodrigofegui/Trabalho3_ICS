@@ -1,10 +1,9 @@
-import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
+import java.util.function.Consumer;
 
 /** 
  * Constroi as condicoes basicas para a execucao do programa:<br>
@@ -17,59 +16,68 @@ import java.io.Writer;
  * @since	14/06/2016
  */
 public class Principal {
+	/*
+	public static long executar(Consumer<String> metodo, String vetor) {
+	    long initialTime = System.nanoTime();
+	    metodo.accept(vetor);
+	    return System.nanoTime() - initialTime;
+	}
+	
+    public static void main(String args[]){
+    	Principal a = new Principal();
+    	String teste = "interfaceGrafica.InterfaceGrafica::doIt";
+    	executar (teste, "1");
+    }
+    //*/
+	
+	
 	/**
 	 * Garante a execucao do programa
 	 * @param args Argumentos recebidos via linha de comando
 	 */
 	public static void main (String args[]){
-		new CriadorArquivo();
+		//interfaceGrafica.InterfaceGrafica.criarInterface();
 		
-		compilarMelodias();
+		//*
+		//conversao.ConversorMidiJava.converterArquivo ("musicas/Let It Go.mid");
+		conversao.ConversorMidiJava.converterArquivo ("musicas/mvioloncelo1.mid");
+		//conversao.ConversorMidiJava.converterArquivo ("musicas/The Rains of Castamere.mid");
+		//conversao.ConversorMidiJava.converterArquivo ("musicas/Ainda bem - Mariza Monte.mid");
+		//conversao.ConversorMidiJava.converterArquivo ("musicas/Super_Mario_Bros_-_Overworld_Theme_by_BlueSCD.mid");
+
+		//teste ();
 		
 		encerrarAtividades();
+		//*/
 	}
 
 	private static void encerrarAtividades() {
-		CriadorArquivo.registrarMelodias();
+		conversao.ConversorMidiJava.registrarMelodias();
+		
 		System.out.println("Acabou tudo\n");
+		
 		System.gc();
 	}
-
-	private static void compilarMelodias() {
-		String[] comandos = {"make", "compilarMelodias"};
-	    //String[] comandos = {"pwd", ""};
-	    Process p;
-	    
+	//*/
+	
+	private static void teste (){
 		try {
-			p = Runtime.getRuntime().exec(comandos);
-			InputStream is = p.getInputStream();
-		    String resposta = convertStreamToString(is);
-		    System.out.println(resposta);
-		    
-		} catch (IOException e) {
+			File arq = new File ("src/melodias/BaseadoMidi.java");
+			RandomAccessFile gravarArq = new RandomAccessFile (arq, "rw");
+			
+			gravarArq.seek (conversao.ConversorMidiJava.posicionarSeek(arq, "//"));
+			gravarArq.writeBytes("**\n");
+			
+			gravarArq.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	private static String convertStreamToString (InputStream is) throws IOException {
-		if(is != null) {
-        	Writer writer = new StringWriter();
-        	char[] buffer = new char[1024];
-        
-        	try {
-        		Reader reader = new BufferedReader(new InputStreamReader(is, "ISO-8859-1"));
-        		int n;
-
-        		while((n = reader.read(buffer)) != -1) {
-        			writer.write(buffer, 0, n);
-        		}
-        	} finally {
-        		is.close();
-        	}
-        		return writer.toString();
-		} else {
-			return "";
-		}
+		
+		
 	}
 	
 }
