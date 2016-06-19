@@ -6,6 +6,7 @@ import java.awt.Color;
 /*	Importando Classes necessárias */
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +43,7 @@ import javax.swing.event.DocumentListener;
  * @author	Helio Santana
  * @author	Rodrigo Guimaraes
  * @version	1.0
- * @since	02/06/2016
+ * @since	16/06/2016
  */
 public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemListener,
 											DocumentListener, MouseListener, FocusListener {
@@ -51,7 +52,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 */
 	static JFrame		janelaPrincipal		= null;
 	static final int	comprimentoMaximo	= 670;
-	static final int	alturaMaxima		= 320;
+	static final int	alturaMaxima		= 341;
 	/**
 	 * Contem todos os paineis formados
 	 */
@@ -79,6 +80,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	static JComboBox<Object>	escolherMelodias		= null;
 	static LinkedList<String> 	melodiasDisponiveis		= null;
 	static JButton				abrirMelodias			= null;
+	static int					qntMelodiasIniciais		= 0;
 	static JComboBox<Object>	escolherInstrumentos	= null;
 	/**
 	 * Opcoes do painel "Configurar/Melodias"
@@ -112,15 +114,17 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 */
 	private JPanel painelAvulso;
 	private JButton botaoAvulso;
-	private Dimension padrao;
+	private Dimension dimensaoAvulsa;
 
 	/**
-	 * Criacao da interface grafica
+	 * Criacao da interface grafica de maneira default
 	 */
 	public InterfaceGrafica (){
 		interfaceGrafica.FormatacaoPadrao.formatarGUI();
 		
 		janelaPrincipal = new JFrame("Trabalho 3 - H\u0026R");
+		
+		janelaPrincipal.setJMenuBar (BarraDeMenu.criarBarraDeMenu());
 		
 		janelaPrincipal.setContentPane (this.getPainelPrincipal());
 		
@@ -186,7 +190,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 * Configuracao inicial do painel "Abrir"
 	 */
 	private void prepararPainelAbrir (){
-		padrao = new Dimension (comprimentoMaximo + 50, 105);
+		dimensaoAvulsa = new Dimension (comprimentoMaximo + 50, 105);
 		
 		painelAbrir = new JPanel ();
 		
@@ -194,16 +198,16 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		
 		painelAbrir.setBorder (BorderFactory.createTitledBorder("Abrir: "));
 		
-		painelAbrir.setMaximumSize (padrao);
-		painelAbrir.setMinimumSize (padrao);
-		painelAbrir.setPreferredSize (padrao);
+		painelAbrir.setMaximumSize (dimensaoAvulsa);
+		painelAbrir.setMinimumSize (dimensaoAvulsa);
+		painelAbrir.setPreferredSize (dimensaoAvulsa);
 	}
 	
 	/**
 	 * Configuracao inicial do painel "Configurar"
 	 */
 	private void prepararPainelConfigurar (){
-		padrao = new Dimension (400, alturaMaxima);
+		dimensaoAvulsa = new Dimension (400, alturaMaxima);
 		
 		painelConfiguracoes = new JPanel ();
 		
@@ -211,9 +215,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		
 		painelConfiguracoes.setBorder (BorderFactory.createTitledBorder ("Configurar: "));
 		
-		painelConfiguracoes.setMaximumSize (padrao);
-		painelConfiguracoes.setMinimumSize (padrao);
-		painelConfiguracoes.setPreferredSize (padrao);
+		painelConfiguracoes.setMaximumSize (dimensaoAvulsa);
+		painelConfiguracoes.setMinimumSize (dimensaoAvulsa);
+		painelConfiguracoes.setPreferredSize (dimensaoAvulsa);
 	}
 	
 	/**
@@ -233,13 +237,13 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 */
 	private void prepararPainelGrupoEsquerda  (){
 		painelGrupoEsquerda = new JPanel ();
-		padrao = new Dimension(250, alturaMaxima);
+		dimensaoAvulsa = new Dimension(250, alturaMaxima);
 		
 		painelGrupoEsquerda.setLayout (new GridLayout(2, 1));
         
-		painelGrupoEsquerda.setMaximumSize(padrao);
-		painelGrupoEsquerda.setMinimumSize(padrao);
-		painelGrupoEsquerda.setPreferredSize(padrao);
+		painelGrupoEsquerda.setMaximumSize(dimensaoAvulsa);
+		painelGrupoEsquerda.setMinimumSize(dimensaoAvulsa);
+		painelGrupoEsquerda.setPreferredSize(dimensaoAvulsa);
 		
 		painelGrupoEsquerda.setOpaque (true);
         
@@ -336,6 +340,10 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 			botaoAvulso.setToolTipText("Melodias disponíveis");
 			painelAvulso.add(botaoAvulso);
 			
+			JPanel painelAvulso2 = new JPanel ();
+			painelAvulso2.setLayout(new FlowLayout());
+			//painelAvulso2.setLayout(new GridLayout(1, 2));
+			
 			melodiasDisponiveis = new LinkedList<String>();
 			melodiasDisponiveis.add("");
 			melodiasDisponiveis.add("frozen");
@@ -351,15 +359,33 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 			melodiasDisponiveis.add("tema_bwv988goldberg_v03_eq");
 			melodiasDisponiveis.add("tema_duda_no_frevo_eq");
 			
-			escolherMelodias = new JComboBox<Object>();
-			for (int i = 0; i < melodiasDisponiveis.size(); i++)
-				escolherMelodias.addItem(melodiasDisponiveis.get(i));
-			escolherMelodias.setToolTipText("Melodias disponíveis");
+			qntMelodiasIniciais = melodiasDisponiveis.size();
 			
+			escolherMelodias = new JComboBox<Object>();
+			for (int i = 0; i < qntMelodiasIniciais; i++)
+				escolherMelodias.addItem(melodiasDisponiveis.get(i));
+			
+			dimensaoAvulsa = new Dimension(160, 25);
+			
+			escolherMelodias.setToolTipText("Melodias disponíveis");
 			escolherMelodias.setActionCommand("escolheMel");
+			escolherMelodias.setMinimumSize(dimensaoAvulsa);
+			escolherMelodias.setMaximumSize(dimensaoAvulsa);
+			escolherMelodias.setPreferredSize(dimensaoAvulsa);
 			escolherMelodias.addActionListener(this);
 			
-			painelAvulso.add(escolherMelodias);
+			dimensaoAvulsa = new Dimension(60, 25);
+			abrirMelodias = criarBotao("abrirMelodia", "Abrir");
+			abrirMelodias.setEnabled(true);
+			abrirMelodias.setToolTipText("Abrir melodia a partir de um arquivo midi");
+			abrirMelodias.setMinimumSize(dimensaoAvulsa);
+			abrirMelodias.setMaximumSize(dimensaoAvulsa);
+			abrirMelodias.setPreferredSize(dimensaoAvulsa);
+			
+			painelAvulso2.add(escolherMelodias);
+			painelAvulso2.add(abrirMelodias);
+			
+			painelAvulso.add(painelAvulso2);
 			painelAbrir.add(painelAvulso);
 	}
 	
@@ -483,8 +509,8 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		
 		painelAvulso = new JPanel ();
 		painelAvulso.setLayout (new BoxLayout(painelAvulso, BoxLayout.X_AXIS));
-		botaoAvulso = criarIdentificacao ("Esteriofonia:", true);
-		controleLambda = criarSlider("Esteriofonia", 0, 100, 50, true);
+		botaoAvulso = criarIdentificacao ("Estereofonia:", true);
+		controleLambda = criarSlider("Estereofonia", 0, 100, 50, true);
 		valorLambda = criarTextField (controleLambda, "lambdaInstrumento", true);
 		valorLambda.getDocument().putProperty ("owner", valorLambda);
 		valorLambda.setToolTipText ("Medida da saida de áudio no canal esquerdo, no direito é o complementar");
@@ -543,9 +569,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		JButton novo = new JButton();
 		
 		if (!checkBox)
-			padrao = new Dimension(85, 30);
+			dimensaoAvulsa = new Dimension(85, 30);
 		else
-			padrao = new Dimension(120, 30);
+			dimensaoAvulsa = new Dimension(120, 30);
 		
 		novo.setText(descricao);
 		novo.setHorizontalAlignment(JButton.CENTER);
@@ -553,9 +579,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		novo.setBorderPainted(false);
 		novo.setContentAreaFilled(false);
 		
-		novo.setMaximumSize (padrao);
-		novo.setMinimumSize (padrao);
-		novo.setPreferredSize (padrao);
+		novo.setMaximumSize (dimensaoAvulsa);
+		novo.setMinimumSize (dimensaoAvulsa);
+		novo.setPreferredSize (dimensaoAvulsa);
 		
 		return novo;
 	}
@@ -612,7 +638,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 * @return			Botao construido
 	 */
 	public JButton criarValorSlider (JSlider mestre){
-		padrao = new Dimension(100, 20);
+		dimensaoAvulsa = new Dimension(100, 20);
 		JButton novo = new JButton();
 		float razao;
 		
@@ -628,9 +654,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		novo.setHorizontalAlignment(JButton.CENTER);
 		novo.setVerticalAlignment(JButton.BOTTOM);
 				
-		novo.setMaximumSize		(padrao);
-		novo.setMinimumSize		(padrao);
-		novo.setPreferredSize	(padrao);
+		novo.setMaximumSize		(dimensaoAvulsa);
+		novo.setMinimumSize		(dimensaoAvulsa);
+		novo.setPreferredSize	(dimensaoAvulsa);
 		
 		return novo;
 	}
@@ -660,7 +686,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 * @return				Area de texto construida
 	 */
 	public JTextField criarTextField (String nome, String textoInicial, boolean executavel){
-		padrao = new Dimension (60, 20);
+		dimensaoAvulsa = new Dimension (60, 20);
 		JTextField novo = new JTextField();
 		
 		novo.setText (textoInicial);
@@ -673,9 +699,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 			novo.addMouseListener(this);
 		}
 		
-		novo.setMinimumSize (padrao);
-		novo.setMaximumSize (padrao);
-		novo.setPreferredSize (padrao);
+		novo.setMinimumSize (dimensaoAvulsa);
+		novo.setMaximumSize (dimensaoAvulsa);
+		novo.setPreferredSize (dimensaoAvulsa);
 				
 		return novo;
 	}
@@ -689,7 +715,7 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 * @return				Area de texto construida
 	 */
 	public JTextField criarTextField (JSlider mestre, String nome, boolean executavel){
-		padrao = new Dimension (60, 20);
+		dimensaoAvulsa = new Dimension (60, 20);
 		JTextField novo = new JTextField();
 		float razao;
 		
@@ -706,9 +732,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 			novo.addMouseListener(this);
 		}
 		
-		novo.setMinimumSize (padrao);
-		novo.setMaximumSize (padrao);
-		novo.setPreferredSize (padrao);
+		novo.setMinimumSize (dimensaoAvulsa);
+		novo.setMaximumSize (dimensaoAvulsa);
+		novo.setPreferredSize (dimensaoAvulsa);
 				
 		return novo;
 	}
@@ -726,6 +752,9 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 		
 		}else if ("escolheInst".equals(evento.getActionCommand())){
 			ControleComandos.escolherInstrumentos ();
+		
+		}else if ("abrirMelodia".equals(evento.getActionCommand())){
+			ControleComandos.abrirMelodia();
 		
 		}else if ("salvar".equals(evento.getActionCommand())){
 			ControleComandos.salvarSom();
@@ -883,8 +912,6 @@ public class InterfaceGrafica implements	ActionListener, ChangeListener, ItemLis
 	 * de declarar
 	 */
 	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**

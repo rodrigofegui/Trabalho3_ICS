@@ -3,6 +3,7 @@ EXECUTADOR = java
 DOCUMENTADOR = javadoc
 
 DIR_BASE = /home/rodrigo/Dropbox/UnB/UnB\ 2016.1/ICS/Trabalhos/Trabalho3/
+DIR_DEFAULT = Default/
 DIR_FONTES = src/
 DIR_BINARIO = bin/
 DIR_DOCUMENTACAO = Javadoc/
@@ -12,9 +13,11 @@ TAGS_DOCUMENTACAO = -author -version
 TAGS_MEMORIA = -Xms1024M -Xmx1624M
 
 ARQ_MELODIAS = melodias/BaseadoMidi
-ARQ_MELODIAS_REGIS = melodiasRegistradas.txt
+ARQ_MELODIAS_REGIS_T = $(DIR_DEFAULT)melodiasRegistradasTratadas.txt
+ARQ_MELODIAS_REGIS_A = $(DIR_DEFAULT)melodiasRegistradasAbsolutas.txt
 ARQ_MELODIAS_SRC = src/$(ARQ_MELODIAS).java
-ARQ_MELODIAS_BIN = bin/melodias/BaseadoMidi.class
+ARQ_MELODIAS_BIN = bin/$(ARQ_MELODIAS).class
+ARQ_MELODIAS_DEF = $(DIR_DEFAULT)$(ARQ_MELODIAS).java
 ARQ_PRINCIPAL = Principal
 
 compilar:
@@ -43,10 +46,10 @@ clear_doc:
 	clear
 
 clear_gerados:
-	rm $(ARQ_MELODIAS_REGIS)
-	touch $(ARQ_MELODIAS_REGIS)	
-	rm $(ARQ_MELODIAS_SRC)
+	rm $(ARQ_MELODIAS_REGIS_T)
+	rm $(ARQ_MELODIAS_REGIS_A)
+	touch $(ARQ_MELODIAS_REGIS_T)
+	touch $(ARQ_MELODIAS_REGIS_A)
+	cp $(ARQ_MELODIAS_DEF) $(DIR_FONTES)melodias
 	rm $(ARQ_MELODIAS_BIN)
-	
-
 

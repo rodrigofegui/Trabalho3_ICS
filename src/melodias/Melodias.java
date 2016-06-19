@@ -4,6 +4,7 @@ package melodias;
 /*	Importando Classes necessárias */
 import sintese.Melodia;
 import sintese.Nota;
+import sintese.Tema;
 
 /** 
  * Constroi as melodias personalizadas a serem tocadas pelos instrumentos
@@ -38,6 +39,48 @@ public class Melodias {
 		melodiaPrincipal.setSeminima (1);	
 		melodiaPrincipal.setAndamento (0.62f);
 
+	}
+	
+	public static Melodia gerenciadorDefault (String nome){
+		System.out.println("Buscando melodia -> " + nome);
+		
+		if (nome.equals("frozen"))
+			return frozen();
+		
+		if (nome.equals("gameOfThrones"))
+			return gameOfThrones();
+		
+		if (nome.equals("rainsOfCastamere"))
+			return rainsOfCastamere();
+		
+		if (nome.equals("melodiasexta1"))
+			return Tema.melodiasexta1();
+		
+		if (nome.equals("sonata_scarlatti"))
+			return Tema.sonata_scarlatti();
+		
+		if (nome.equals("tema_aa_drawing_quintet_flauta"))
+			return Tema.tema_aa_drawing_quintet_flauta();
+		
+		if (nome.equals("tema_aa_fuga1"))
+			return Tema.tema_aa_fuga1();
+		
+		if (nome.equals("tema_bwv775_invencao14_direita"))
+			return Tema.tema_bwv775_invencao14_direita();
+		
+		if (nome.equals("tema_bwv775_invencao4_direita"))
+			return Tema.tema_bwv775_invencao4_direita();
+		
+		if (nome.equals("tema_bwv775_invencao4_esquerda"))
+			return Tema.tema_bwv775_invencao4_esquerda();
+		
+		if (nome.equals("tema_bwv988goldberg_v03_eq"))
+			return Tema.tema_bwv988goldberg_v03_eq();
+		
+		if (nome.equals("tema_duda_no_frevo_eq"))
+			return Tema.tema_duda_no_frevo_eq();
+		
+		else return null;
 	}
 	
 	/**
