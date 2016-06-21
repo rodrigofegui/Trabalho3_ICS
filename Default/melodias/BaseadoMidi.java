@@ -21,7 +21,7 @@ public class BaseadoMidi{
 		melodiaPrincipal.setAndamento (0.62f);
 	}
 
-	public static Melodia padrao (String nome){
+	public static Melodia gerenciador (String nome){
 		return null;
 	}
 }

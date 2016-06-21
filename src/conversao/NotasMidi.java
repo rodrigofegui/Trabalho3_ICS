@@ -10,6 +10,10 @@ package conversao;
  */
 public class NotasMidi {
 	/**
+	 * Frequencia base para as notas, obdecendo a afinacao igualmente temperada
+	 */
+	public static final float f_0 = 8.175f;
+	/**
 	 * Controle de amplitude da nota
 	 * Frequencia da nota, em Hz
 	 * Instantes limítrofes da nota
@@ -19,11 +23,9 @@ public class NotasMidi {
 	float frequencia;
 	float instanteInicial, instanteFinal;
 	float duracao;
+
 	
-	/**
-	 * Frequencia base para as notas, obdecendo a afinacao igualmente temperada
-	 */
-	public static final float f_0 = 8.175f;
+	
 	
 	/**
 	 * Construcao da nota de maneira default

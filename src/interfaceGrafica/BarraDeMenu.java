@@ -86,18 +86,21 @@ public class BarraDeMenu implements ActionListener{
         menu.setToolTipText("Exibi\u00e7\u00e3o de informa\u00e7\u00f5es importantes");
         
         itensMenu = new JMenuItem ("Conte\u00fado MIDI");
+        itensMenu.setToolTipText("Conteúdo bruto do arquivo base");
         itensMenu.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
         itensMenu.setActionCommand("midi");
         itensMenu.addActionListener(this);
         menu.add(itensMenu);
         
         itensMenu = new JMenuItem ("Conte\u00fado Musical");
+        itensMenu.setToolTipText("Conteúdo musical do arquivo base");
         itensMenu.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
         itensMenu.setActionCommand("musical");
         itensMenu.addActionListener(this);
         menu.add(itensMenu);
         
         itensMenu = new JMenuItem ("Classe Java");
+        itensMenu.setToolTipText("Classe java no estado atual, sem poder editar");
         itensMenu.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_J, ActionEvent.CTRL_MASK));
         itensMenu.setActionCommand("java");
         itensMenu.addActionListener(this);
@@ -195,24 +198,16 @@ public class BarraDeMenu implements ActionListener{
 	}
 	
 	private void addMenuAjuda() {
-		/*	Criação do Menu */
 		menu = new JMenu("Ajuda");
-		/*	Estabelecendo atalho para o menu: 'Alt + F' */
-        menu.setMnemonic(KeyEvent.VK_H);
-        /*	Descrição ao permanecer com o mouse */
+		menu.setMnemonic(KeyEvent.VK_H);
         menu.setToolTipText("Exposi\u00e7\u00e3o a cerca do trabalho");
-        /*	Adicionando menu à barra de menu */
         barraDeMenu.add(menu);
         
-        /*	Criando novo item */
         itensMenu = new JMenuItem ("Sobre");
-        /*	Estabelecendo atalho para este item: 'Ctrl + Espaço' */
-        //itensMenu.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, ActionEvent.CTRL_MASK));
-        /*	Identificação da Ação a ser tomada */
+        itensMenu.setToolTipText("Exposição a cerca do trabalho");
+        itensMenu.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
         itensMenu.setActionCommand("sobre");
-        /*	Adicionando Ação ao item */
         itensMenu.addActionListener(this);
-        /*	Adicionando ao menu */
         menu.add(itensMenu);
 	}
 	

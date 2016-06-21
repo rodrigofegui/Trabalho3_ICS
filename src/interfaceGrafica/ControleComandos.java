@@ -59,7 +59,7 @@ public class ControleComandos {
 	private static boolean invertida = false;
 	static boolean editando = false;
 	private static boolean deslizando = false;
-	private static String dirBase = "Musicas/Wave/";
+	private static String dirBase = "musicas/Wave/";
 	static DecimalFormat formatoFloat = new DecimalFormat("0.00");
 	/**
 	 * Constantes necessarias
@@ -168,8 +168,10 @@ public class ControleComandos {
 		else if (indiceEscolhido < InterfaceGrafica.qntMelodiasIniciais)
 			melodiaEscolhida = melodias.Melodias.gerenciadorDefault(nome);
 		
-		else
-			melodiaEscolhida = melodias.BaseadoMidi.padrao(nome);
+		else{
+			System.out.println("Abrindo melodia -> " + nome);
+			melodiaEscolhida = melodias.BaseadoMidi.gerenciador(nome);
+		}
 		
 		configurarInfosMelodias ();
 		
@@ -630,7 +632,7 @@ public class ControleComandos {
 	 */
 	public static void conteudoMidi (){
 		JFrame janelaDados = new JFrame("Conteúdo MIDI");
-		janelaDados.setSize(new Dimension(1000, 600));
+		janelaDados.setSize(new Dimension(600, 600));
 		janelaDados.setVisible (true);
 		janelaDados.setResizable(false);
 		janelaDados.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -662,6 +664,8 @@ public class ControleComandos {
 			
 			indiceEscolhido = conversao.ConversorMidiJava.melodiasRegistradasTratadas.indexOf(nome);
 			nome = conversao.ConversorMidiJava.melodiasRegistradasAbsolutas.get(indiceEscolhido);
+			
+			System.out.println("pediu o arquivo -> " + nome);
 			
 			try{
 				File arqmidi = new File(nome);
@@ -836,12 +840,12 @@ public class ControleComandos {
 						+ "<b> Desenvolvido por: </b><br />"
 						+ "<i>Hélio Santana e Rodrigo Guimar\u00e3es</i><br /><br />"
 						+ "<b> Finalidade: </b><br />"
-						+ "Conversão de arquivos midi, principalmente a melodia desrita,"
-						+ "para uma classe Java, de forma automática e direta, possibilitando:"
-						+ "aplicações normais como nas melodias do pacote sintese fornecido;"
-						+ "exibição do conteúdo midi do arquivo original;"
+						+ "Conversão de arquivos midi, principalmente a melodia desrita, "
+						+ "para uma classe Java, de forma automática e direta, possibilitando: "
+						+ "aplicações normais como nas melodias do pacote sintese fornecido; "
+						+ "exibição do conteúdo midi do arquivo original; "
 						+ "exibição das informações musicais e "
-						+ "a exibição do documento criado pela conversão."
+						+ "a exibição do documento criado pela conversão.<br />"
 						+ "<b> Linguagem adotada: </b><br />"
 						+ "A aplicaç\u00e3o foi desenvolvida em linguagem JAVA, tendo a GUI "
 						+ "implementada por intermédio da SWING.<br /><br />"
@@ -869,6 +873,18 @@ public class ControleComandos {
 			conversao.ConversorMidiJava.melodiasRegistradasAbsolutas.add(arq.getAbsolutePath());
 			
 			conversao.ConversorMidiJava.registrarMelodias(conversao.ConversorMidiJava.melodiasRegistradasAbsolutas, true);
+		}
+	}
+	
+	/**
+	 * Adicao da melodia extraida do arquivo midi no escopo da execucao
+	 * @param nome Nome da melodia
+	 */
+	public static void adicionarMelodia (String nome){
+		if (InterfaceGrafica.melodiasDisponiveis.indexOf(nome) == -1){
+			
+			InterfaceGrafica.melodiasDisponiveis.add(nome);
+			InterfaceGrafica.escolherMelodias.addItem(nome);
 		}
 	}
 
